@@ -10,7 +10,7 @@
 <body>
     <?php
 
-        function showVar($var){
+        function showVar($var): void{
             echo is_array($var) ? "<p>Zmienna: ".implode($var).", Wartość: ".count($var)."</p>"
                 : "<p>Zmienna: $$var, Wartość: $var</p>";
             echo "<br>Bool: ".var_dump(is_bool($var));
@@ -21,12 +21,12 @@
             echo "<br>Object: ".var_dump(is_object($var));
         }
 
-        function compare($x, $y){
+        function compare($x, $y): void{
             echo '<p>Operator == '.var_dump(($x == $y)).'</p><br>';
             echo '<p>Operator === '.var_dump(($x === $y)).'</p><br>';
         }
 
-        function checkDumpAndR($var){
+        function checkDumpAndR($var): void{
             echo "<p>Dump: ".var_dump($var)."</p>";
             echo "<p>print_r: ".print_r($var, true)."</p>";
         }

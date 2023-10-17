@@ -1,5 +1,6 @@
 <?php
-    function validateData($data, $name){
+    function validateData($data, $name): void
+    {
         if(isset($_POST[$data]) && ($_POST[$data] != "")){
             $var = htmlspecialchars(trim($_POST[$data]));
             echo '<p>'.$name.': '.$var.'</p>';
@@ -8,7 +9,7 @@
         }
     }
 
-    function validateCheckbox($data, $name){
+    function validateCheckbox($data, $name): void{
         if(isset($_POST[$data]) && ($_POST[$data] != "")){
             $var = htmlspecialchars(trim($_POST[$data]));
             echo '<p>'.$name.': '.$var.'</p>';
