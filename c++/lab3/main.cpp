@@ -125,6 +125,15 @@ int main()
     a2.show();
     a2.sort();
     a2.show();
+
+    Array<string> a3;
+    a3.add("Kamil");
+    a3.add("Pawelfdhgh");
+    a3.add("C++");
+    a3.show();
+    cout << "max: " << a3.getMax() << endl;
+    a3.sort();
+    a3.show();
 #endif
 
     return 0;

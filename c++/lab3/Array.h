@@ -97,4 +97,21 @@ T Array<T>::getFromIndex(int index)
     return arr[index];
 }
 
+template<>
+void Array<std::string>::sort()
+{
+    std::sort(arr, arr + first);
+}
+
+template<>
+std::string Array<std::string>::getMax()
+{
+    std::string max = arr[0];
+    for(int i=0; i<first; i++)
+    {
+        if(arr[i].length() > max.length()) max = arr[i];
+    }
+    return max;
+}
+
 #endif //STUDIES_ARRAY_H
