@@ -25,6 +25,7 @@ function show(): void{
 }
 
 function showOnly($filter): void{
+    $filter = $filter . ',';
     $orders = file("data.txt");
     foreach ($orders as $order){
         if(str_contains($order, $filter)){

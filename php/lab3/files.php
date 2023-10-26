@@ -47,6 +47,7 @@
     include_once "utils.php";
 
     $value = $_POST['submit'];
+    $_POST['submit'] = '';
 
     switch($value){
         case 'save':
@@ -68,10 +69,10 @@
             echo "";
     }
 
-    // 3.3
-    foreach ($_SERVER as $key => $value){
-        echo $key." = ".$value."<br>";
-    }
+//    // 3.3
+//    foreach ($_SERVER as $key => $value){
+//        echo $key." = ".$value."<br>";
+//    }
 ?>
 </body>
 </html>
