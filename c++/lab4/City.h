@@ -6,8 +6,11 @@
 #define LAB4_CITY_H
 
 #include <vector>
+#include <functional>
+#include <algorithm>
 
 #include "Citizen.h"
+#include "PostalCode.h"
 
 class City{
 private:
@@ -26,10 +29,10 @@ public:
     int adults();
     int postal_codes();
 
-    static void showCities(std::vector<City> c);
-    static void the_most(std::vector<City> c, int mode);
-    static void statatistic(std::vector<City> c);
-    static void sort_cities(std::vector<City> &c);
+    static void showCities(std::vector<City> cities);
+    static void the_most(std::vector<City> cities, int mode);
+    static void statatistic(std::vector<City> cities);
+    static void sort_cities(std::vector<City>& cities);
 
 
 };
