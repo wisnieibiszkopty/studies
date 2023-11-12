@@ -7,23 +7,30 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="center">
-        <h1>Insert your image here</h1>
-        <form method="post" action="images.php" enctype="multipart/form-data">
-            <div>
-                <label for="width">Max width: </label>
-                <input type="number" name="width" id="width">
+    <div class="background">
+        <div class="center">
+            <div class="form-center">
+                <h1>Insert your image here</h1>
+                <form method="post" action="images.php" enctype="multipart/form-data">
+                    <div>
+                        <label for="width">Max width: </label>
+                        <input type="number" name="width" id="width">
+                    </div>
+                    <div>
+                        <label for="height">Max size: </label>
+                        <input type="number" name="height" id="height">
+                    </div>
+                    <div>
+                        <label>Add image</label>
+                        <input type="file" name="image">
+                    </div>
+                    <input type="submit" value="save" name="save">
+                </form>
             </div>
-            <div>
-                <label for="height">Max size: </label>
-                <input type="number" name="height" id="height">
-            </div>
-            <div>
-                <label>Add image</label>
-                <input type="file" name="image">
-            </div>
-            <input type="submit" value="submit" name="submit">
-        </form>
+        </div>
+        <div class="link">
+            <h2><a href="gallery.php">Go to gallery</a></h2>
+        </div>
     </div>
 </body>
 </html>

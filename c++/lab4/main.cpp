@@ -201,7 +201,6 @@ int main() {
 
 #endif
 #ifdef zad4
-    // moi ludzie driftem omijaj¹ wiêzienie
     vector<int> vec1 = {83, 123, 13, 999, 5, 10, 543, 67, 54, 7};
     vector<int> vec2 = vec1;
 
@@ -212,7 +211,6 @@ int main() {
     cout << endl << "Sorting by number of digits: " << endl;
     sort(vec2.begin(), vec2.end(), sortByNumberOfDigits);
     for_each(vec2.begin(), vec2.end(), print);
-    // jazda
 #endif
     return 0;
 }

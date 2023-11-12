@@ -44,6 +44,7 @@ function validate(): void{
     if($errors === ''){
         saveToFile("data.txt", $data);
     } else {
+        echo $errors;
         echo "<h1 style='color: red'>Niepoprawne dane</h1>";
     }
 }
@@ -53,21 +54,43 @@ function save(): void{
     validate();
 }
 
+function printTable($orders){
+    echo "<div class='form-item'><table>
+            <thead>
+                <tr>
+                    <th>Nazwisko</th>
+                    <th>Wiek</th>
+                    <th>Kraj</th>
+                    <th>Email</th>
+                    <th>Płatność</th>
+                </tr>
+            </thead><tbody>";
+    foreach ($orders as $order){
+        $array = explode(" ", $order);
+        echo "<tr><td>$array[0]</td>";
+        echo "<td>$array[1]</td>";
+        echo "<td>$array[2]</td>";
+        echo "<td>$array[3]</td>";
+        echo "<td>$array[5]</td></tr>";
+    }
+    echo "</tbody></table></div>";
+}
+
 function show(): void{
     $orders = file("data.txt");
-    foreach ($orders as $order){
-        echo $order."<br>";
-    }
+    printTable($orders);
 }
 
 function showOnly($filter): void{
     $filter = $filter . ',';
     $orders = file("data.txt");
+    $filterOrders = array();
     foreach ($orders as $order){
         if(str_contains($order, $filter)){
-            echo $order."<br>";
+            $filterOrders[] = $order;
         }
     }
+    printTable($filterOrders);
 }
 
 function showStatistics(): void{

@@ -4,11 +4,14 @@
 #include <map>
 #include <vector>
 
+#include "Dictionary.h"
+
 // #define sett
 // #define mapp
 // #define zad1
 // #define zad2
-// #define zad3
+ #define zad3
+// #define zad4
 
 using namespace std;
 
@@ -93,18 +96,46 @@ void exclusiveAlternative(set<T> s1, set<T> s2)
 }
 
 // zad 5.3
-// tworzymy mape z liczba wystapien liter w s1
-// potem taki sam dla s2 i sprawdzamy gdzie nie sa rowne?
-char findAdditionalChar(string& s1, string& s2)
+// 
+// drugi o jeden dluzszy od pierwszego
+// pierwszy napis - n znakow
+// drugi - n + 1
+char findAdditionalChar(string s1, string s2)
 {
     char c;
-    int len = s2.length();
-    map<char, int> chars;
-    for(int i=0; i<len; i++)
+    map<char, int> m1;
+    for (int i = 0; i < s1.length(); i++)
     {
-
+        if (m1.find(s1[i]) == m1.end())
+        {
+            m1[s1[i]] = 1;
+        }
+        else
+        {
+            m1[s1[i]] += 1;
+        }
     }
-    return ' ';
+
+    // jezeli litery nie ma w slowniku, to jest to ta ktorej szukamy
+    // jezeli jest w slowniku to odejmujemy jedno wystapienie
+    // takim sposobem kazdemu znakowi w mapie powinno przypasc 0 wystapien
+    // poza jednym nadmiarowej, w ktorego przypadku jest ich -1
+    for (int i = 0; i < s2.length(); i++)
+    {
+        if (m1.find(s2[i]) != m1.end())
+        {
+            m1[s2[i]] -= 1;
+            if (m1[s2[i]] < 0)
+            {
+                return s2[i];
+            }
+        }
+        // litery nie ma w slowniku - to na pewno dodatkowa
+        else
+        {
+            return s2[i];
+        }
+    }
 }
 
 int main() {
@@ -191,6 +222,27 @@ int main() {
     exclusiveAlternative(s1, s2);
 #endif
 #ifdef zad3
+    char c = findAdditionalChar("amogus", "amongus");
+    cout << "Dodatkowy znak: " << c << endl;
+#endif
+#ifdef zad4
+    Dictionary dict;
+    dict.addWord("woda", "water");
+    dict.addWord("drzewo", "tree");
+    dict.addWord("woda", "square");
+    dict.addWord("ludzie", "people");
+    dict.addWord("ty", "you");
+    dict.addWord("ogien", "fire");
+    dict.addWord("samochod", "car");
+
+    dict.translate("ludzie");
+    dict.translate("morze");
+    dict.show();
+    dict.deleteWord("ty");
+    cout << endl;
+    dict.show();
+    cout << endl;
+    dict.sort();
 
 #endif
     return 0;
