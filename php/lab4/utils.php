@@ -55,7 +55,9 @@ function save(): void{
 }
 
 function printTable($orders){
-    echo "<div class='form-item'><table>
+    if(count($orders))
+    {
+        echo "<div class='center'><div class='form-item table-wrap'><table>
             <thead>
                 <tr>
                     <th>Nazwisko</th>
@@ -63,17 +65,21 @@ function printTable($orders){
                     <th>Kraj</th>
                     <th>Email</th>
                     <th>Płatność</th>
+                    <th>Języki</th>
                 </tr>
             </thead><tbody>";
-    foreach ($orders as $order){
-        $array = explode(" ", $order);
-        echo "<tr><td>$array[0]</td>";
-        echo "<td>$array[1]</td>";
-        echo "<td>$array[2]</td>";
-        echo "<td>$array[3]</td>";
-        echo "<td>$array[5]</td></tr>";
+        foreach ($orders as $order){
+            $array = explode(" ", $order);
+            echo "<tr><td>$array[0]</td>";
+            echo "<td>$array[1]</td>";
+            echo "<td>$array[2]</td>";
+            echo "<td>$array[3]</td>";
+            echo "<td>$array[4]</td>";
+            $langs = str_replace(',', ' | ', $array[5]);
+            echo "<td>$langs</td></tr>";
+        }
+        echo "</tbody></table></div></div>";
     }
-    echo "</tbody></table></div>";
 }
 
 function show(): void{

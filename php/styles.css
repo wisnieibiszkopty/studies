@@ -4,10 +4,17 @@ body{
     font-family: Arial, sans-serif;
 }
 
+.center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 form{
     display: flex;
     flex-direction: row;
     justify-content: center;
+    width: 70vw;
 }
 
 article{
@@ -96,61 +103,61 @@ select>option{
 
 /* checkbox */
 /* guwno nie dziala */
-.checkbox {
-    position: absolute;
-    overflow: hidden; 
-    clip: rect(0 0 0 0);
-    height: 1px;
-    width: 1px;
-    margin: -1px;
-    padding: 0;
-    border: 0;
-}
-        
-.checkbox + label { 
-    position: relative; 
-    font-size: 20px; 
-    cursor: pointer; 
-    display: inline-flex; 
-    align-items: center; 
-    height: 20px; 
-    color: rgb(255, 255, 255); 
-}
+/*.checkbox {*/
+/*    position: absolute;*/
+/*    overflow: hidden; */
+/*    clip: rect(0 0 0 0);*/
+/*    height: 1px;*/
+/*    width: 1px;*/
+/*    margin: -1px;*/
+/*    padding: 0;*/
+/*    border: 0;*/
+/*}*/
+/*        */
+/*.checkbox + label { */
+/*    position: relative; */
+/*    font-size: 20px; */
+/*    cursor: pointer; */
+/*    display: inline-flex; */
+/*    align-items: center; */
+/*    height: 20px; */
+/*    color: rgb(255, 255, 255); */
+/*}*/
 
-.checkbox + label::before { 
-    content: " "; 
-    display: inline-block; 
-    vertical-align: middle; 
-    margin-right: 3px; 
-    width: 20px; 
-    height: 20px; 
-    background-color: rgb(63, 55, 95); 
-    border-width: 0px; 
-    border-style: solid; 
-    border-color: rgb(204, 204, 204); 
-    border-radius: 6px; 
-    box-shadow: none; 
-}
-    
-.checkbox:checked + label::after { 
-    content: " "; 
-    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjZmZmZmZmIiBkPSJNMCAxOTAuOVYxODUuMUMwIDExNS4yIDUwLjUyIDU1LjU4IDExOS40IDQ0LjFDMTY0LjEgMzYuNTEgMjExLjQgNTEuMzcgMjQ0IDg0LjAyTDI1NiA5NkwyNjcuMSA4NC4wMkMzMDAuNiA1MS4zNyAzNDcgMzYuNTEgMzkyLjYgNDQuMUM0NjEuNSA1NS41OCA1MTIgMTE1LjIgNTEyIDE4NS4xVjE5MC45QzUxMiAyMzIuNCA0OTQuOCAyNzIuMSA0NjQuNCAzMDAuNEwyODMuNyA0NjkuMUMyNzYuMiA0NzYuMSAyNjYuMyA0ODAgMjU2IDQ4MEMyNDUuNyA0ODAgMjM1LjggNDc2LjEgMjI4LjMgNDY5LjFMNDcuNTkgMzAwLjRDMTcuMjMgMjcyLjEgLjAwMDMgMjMyLjQgLjAwMDMgMTkwLjlMMCAxOTAuOXoiLz48L3N2Zz4="); 
-    background-repeat: no-repeat; 
-    background-size: 10px 10px; 
-    background-position: center center; 
-    position: absolute; 
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    margin-left: 0px; 
-    left: 0px; 
-    top: 0px; 
-    text-align: center; 
-    background-color: transparent; 
-    font-size: 10px; 
-    height: 20px; 
-    width: 20px;
- }
+/*.checkbox + label::before { */
+/*    content: " "; */
+/*    display: inline-block; */
+/*    vertical-align: middle; */
+/*    margin-right: 3px; */
+/*    width: 20px; */
+/*    height: 20px; */
+/*    background-color: rgb(63, 55, 95); */
+/*    border-width: 0px; */
+/*    border-style: solid; */
+/*    border-color: rgb(204, 204, 204); */
+/*    border-radius: 6px; */
+/*    box-shadow: none; */
+/*}*/
+/*    */
+/*.checkbox:checked + label::after { */
+/*    content: " "; */
+/*    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjZmZmZmZmIiBkPSJNMCAxOTAuOVYxODUuMUMwIDExNS4yIDUwLjUyIDU1LjU4IDExOS40IDQ0LjFDMTY0LjEgMzYuNTEgMjExLjQgNTEuMzcgMjQ0IDg0LjAyTDI1NiA5NkwyNjcuMSA4NC4wMkMzMDAuNiA1MS4zNyAzNDcgMzYuNTEgMzkyLjYgNDQuMUM0NjEuNSA1NS41OCA1MTIgMTE1LjIgNTEyIDE4NS4xVjE5MC45QzUxMiAyMzIuNCA0OTQuOCAyNzIuMSA0NjQuNCAzMDAuNEwyODMuNyA0NjkuMUMyNzYuMiA0NzYuMSAyNjYuMyA0ODAgMjU2IDQ4MEMyNDUuNyA0ODAgMjM1LjggNDc2LjEgMjI4LjMgNDY5LjFMNDcuNTkgMzAwLjRDMTcuMjMgMjcyLjEgLjAwMDMgMjMyLjQgLjAwMDMgMTkwLjlMMCAxOTAuOXoiLz48L3N2Zz4="); */
+/*    background-repeat: no-repeat; */
+/*    background-size: 10px 10px; */
+/*    background-position: center center; */
+/*    position: absolute; */
+/*    display: flex; */
+/*    justify-content: center; */
+/*    align-items: center; */
+/*    margin-left: 0px; */
+/*    left: 0px; */
+/*    top: 0px; */
+/*    text-align: center; */
+/*    background-color: transparent; */
+/*    font-size: 10px; */
+/*    height: 20px; */
+/*    width: 20px;*/
+/* }*/
 
 /* radio */
 /* [type="radio"]:checked,
@@ -207,6 +214,10 @@ select>option{
 } */
 
 /* table */
+.table-wrap{
+    width: 70%;
+}
+
 table{
     width: 100%;
     table-layout: fixed;

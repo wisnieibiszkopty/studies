@@ -1,9 +1,9 @@
 C:1
 CPP:4
-Java:4
+Java:5
 C#:12
 Html:3
 CSS:7
-XML:4
+XML:5
 PHP:3
 Javascript:7

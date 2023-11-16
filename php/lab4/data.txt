@@ -2,3 +2,4 @@ Wodowski 23 pl KamilWodowski@o2.pl cpp,java,c# visa save
 Winski 76 pl s97765@pollub.edu.pl cpp,html,css,php euro save 
 Nowak 69 gb nowak@gmail.com przelew java,c#,html save 
 Jazda 14 gb jazda@pollub.edu.pl visa cpp,c#,css save 
+Milosz 34 pl milosz@gmail.com euro php,javascript save 
