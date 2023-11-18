@@ -16,4 +16,4 @@
         <date>2018-10-10</date>
         <status>1</status>
     </user>
-</users>
+<user><userName>Jazda</userName><fullName>Adam Nowak</fullName><email>jazda@pollub.edu.pl</email><passwd>$2y$10$n2VVhNoz9b5Nt8iua0Du6uFTVbnUa52JB3qNZWUnwW9YqgaaqUflG</passwd><date>2023-11-18</date><statys>1</statys></user><user><userName>Jazda2</userName><fullName>Kaml Nowak</fullName><email>jazda@pollub.edu.pl</email><passwd>$2y$10$U8NCUaXMdl1xkkNkKdj76OMX.cjJ/meW8HQYvV3hWUSjra.thfmgm</passwd><date>2023-11-18</date><status>1</status></user></users>

@@ -1,7 +1,12 @@
-<style>
-    @import "styles.css";
-</style>
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classes</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
 <?php
     include_once 'classes/User.php';
     include_once 'classes/RegistrationForm.php';
@@ -24,11 +29,20 @@
             echo "<h1>Poprawne dane rejestracji</h1><br>";
             $user->show();
             $user->save("users.json");
+            $user->saveXML("users.xml");
         }
     }
 
     // 5.3
 
+    echo "<h1>Użytkownicy z pliku json: </h1><br>";
     User::getAllUsers();
 
+    // 5.4
+
+    echo "<h1>Użytkownicy z pliku xml: </h1><br>";
+    User::getAllUsersFromXML();
+
 ?>
+</body>
+</html>

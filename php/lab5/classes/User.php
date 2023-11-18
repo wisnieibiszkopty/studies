@@ -57,6 +57,14 @@ class User{
         return $this->userName;
     }
 
+    public function getDate(): string {
+        return $this->date->format('Y-m-d');
+    }
+
+    public function getStatus(): int {
+        return $this->status;
+    }
+
     public function show(): void{
         echo $this->userName . " " . $this->fullName . " " . $this->email . " " .
             $this->password . " " . $this->date->format('Y-m-d') . " " . $this->status . "<br>";
@@ -65,20 +73,43 @@ class User{
     public static function getAllUsers(): void{
         $json_file = file_get_contents('users.json');
         $users = json_decode($json_file, true);
-
+?>
+        <table class="table table-success table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Username</th>
+                <th scope="col">Fullname</th>
+                <th scope="col">Email</th>
+                <th scope="col">Password</th>
+                <th scope="col">Date</th>
+                <th scope="col">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+<?php
+        $i = 1;
         foreach ($users as $user){
-            foreach ($user as $field){
-                echo "$field<br>";
-            }
+            echo "<tr>
+                <td>$i</td>
+                <td>".$user['userName']."</td>
+                <td>".$user['fullName']."</td>
+                <td>".$user['email']."</td>
+                <td>".$user['passwd']."</td>
+                <td>".$user['date']."</td>
+                <td>".$user['status']."</td>
+            </tr>";
+            $i++;
         }
+        echo "</tbody></table>";
     }
 
     public function toArray(): array{
         $array = [
             'userName' => $this->userName,
-            'fullname' => $this->fullName,
+            'fullName' => $this->fullName,
             'email' => $this->email,
-            'password' => $this->password,
+            'passwd' => $this->password,
             'date' => $this->date->format('Y-m-d'),
             'status' => $this->status
         ];
@@ -93,20 +124,54 @@ class User{
     }
 
     public static function getAllUsersFromXML(){
-        $users = simplexml_load_file('users.xml');
+        $users = simplexml_load_file('users.xml') or die("Cannot create object");
+?>
+        <table class="table table-warning table-striped table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Fullname</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Password</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+<?php
+        $i = 1;
         foreach ($users as $user){
             $userName = $user->userName;
-            $filename = $user->filename;
+            $filename = $user->fullName;
             $email = $user->email;
-            $password = $user->password;
-            echo "
-                
-            ";
+            $password = $user->passwd;
+            $date = $user->date;
+            $status = $user->status;
+            echo "<tr>
+                <td>$i</td>
+                <td>$userName</td>
+                <td>$filename</td>
+                <td>$email</td>
+                <td>$password</td>
+                <td>$date</td>
+                <td>$status</td>
+            </tr>";
+            $i++;
         }
+        echo "</tbody></table>";
     }
 
-    public function saveXML(): void{
-
+    public function saveXML($file): void{
+        $xml = simplexml_load_file($file) or die("Cannot create object");
+        $xmlChild = $xml->addChild("user");
+        $xmlChild->addChild("userName", $this->getUserName());
+        $xmlChild->addChild("fullName", $this->getFullName());
+        $xmlChild->addChild("email", $this->getEmail());
+        $xmlChild->addChild("passwd", $this->getPassword());
+        $xmlChild->addChild("date", $this->getDate());
+        $xmlChild->addChild("status", $this->getStatus());
+        $xml->asXML($file);
     }
 
 }
