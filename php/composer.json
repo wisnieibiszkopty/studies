@@ -1,0 +1,17 @@
+{
+    "name": "kamilen/php",
+    "autoload": {
+        "psr-4": {
+            "Kamilen\\Php\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Kamilen",
+            "email": "s97766@pollub.edu.pl"
+        }
+    ],
+    "require": {
+        "mongodb/mongodb": "^1.0.0"
+    }
+}

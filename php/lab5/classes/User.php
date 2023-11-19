@@ -1,4 +1,6 @@
 <?php
+include_once "Database.php";
+
 class User{
     const STATUS_USER = 1;
     const STATUS_ADMIN = 2;
@@ -10,6 +12,8 @@ class User{
     protected DateTime $date;
     protected int $status;
 
+    protected $database;
+
     public function __construct($userName, $fullName, $email, $password){
         $this->userName = $userName;
         $this->fullName = $fullName;
@@ -17,6 +21,9 @@ class User{
         $this->password = password_hash($password, PASSWORD_DEFAULT);
         $this->status = User::STATUS_USER;
         $this->date = new DateTime();
+
+        $this->database = new Database();
+        $this->database->selectCollection("users");
     }
 
     public function getFullName(): string
@@ -172,6 +179,31 @@ class User{
         $xmlChild->addChild("date", $this->getDate());
         $xmlChild->addChild("status", $this->getStatus());
         $xml->asXML($file);
+    }
+
+    public function saveToDatabase(): void {
+        $document = $this->toArray();
+        $this->database->insert($document);
+        echo "<h2>Zapisano dokument w bazie danych</h2><br>";
+    }
+
+    // powinnismy skorzystac z obiektu $database, ale jest on dostepny tylko po dodaniu nowego rekordu
+    // wiec nie da sie wyswietlic z nim danych statyczna metoda, a bez statycznej beda wyswietlane
+    // tylko gdy dodajemy nowego uzytkownika
+    public static function findInDatabase(): void {
+        $db = new Database();
+        $db->selectCollection("users");
+        $users = $db->findAll();
+        echo "<h1>Dane z bazy danych</h1><br>";
+        foreach($users as $user){
+            echo "id: " . $user["_id"] . 
+            "<br>name: " . $user["userName"] . 
+            "<br>surname: " . $user["fullName"] . 
+            "<br>email: " . $user["email"] . 
+            "<br>password: " . $user["passwd"] . 
+            "<br>date: " . $user["date"] . 
+            "<br>status: " . $user["status"] . "<br><br>";
+        }
     }
 
 }

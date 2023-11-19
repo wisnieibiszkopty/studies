@@ -30,6 +30,7 @@
             $user->show();
             $user->save("users.json");
             $user->saveXML("users.xml");
+            $user->saveToDatabase();
         }
     }
 
@@ -43,6 +44,8 @@
     echo "<h1>Użytkownicy z pliku xml: </h1><br>";
     User::getAllUsersFromXML();
 
+    // Wyświetlanie rekordów z bazy danych
+    User::findInDatabase();
 ?>
 </body>
 </html>
