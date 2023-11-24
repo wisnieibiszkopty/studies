@@ -45,7 +45,7 @@
     User::getAllUsersFromXML();
 
     // Wyświetlanie rekordów z bazy danych
-    User::findInDatabase();
+    //User::findInDatabase();
 ?>
 </body>
 </html>
