@@ -15,18 +15,23 @@ class Database{
         $this->database->close();
     }
 
+    public function query($sql){
+        if($this->database->query($sql)) return true; else return false;
+    }
+
     public function select($sql, $params){
         $html = "";
         if($result = $this->database->query($sql)){
             $count = count($params);
-            $rowsCount = $result->num_rows;
-            $html .= "<table><tbody>";
             while($row = $result->fetch_object()){
+                $field = $params[0];
+                $id = $row->$field;
                 $html .= "<tr>";
                 for($i=0; $i<$count; $i++){
                     $field = $params[$i];
                     $html .= "<td>" . $row->$field . "</td>";
                 }
+                $html .= "<td><a onclick='deleteClient($id)'><i class='bi bi-x'></i></a></td>";
                 $html .= "</tr>";
             }
             $html .= "</tbody></table>";
@@ -36,11 +41,34 @@ class Database{
         return $html;
     }
 
-    public function save($sql): bool{
+    // póki co funkcja odnosi się jedynie do tabeli clients,
+    // użycie bind_param w ogólnym przypadku jest za
+    // trudne żebym się teraz z tym męczył
+    public function save($values): bool{
+        $stmt = $this->database->prepare("INSERT INTO clients VALUES (NULL, ?, ?, ?, ?, ?, ?)");
+        foreach($values as $val){
+            echo "$val<br>";
+        }
+        $stmt->bind_param("sissss", $name, $age, $country, $email, $orders, $payment);
+        $name = $values[0];
+        $age = $values[1];
+        $country = $values[2];
+        $email = $values[3];
+        $orders = $values[4];
+        $payment = $values[5];
+        return $stmt->execute();
+    }
+
+
+    // na ten moment usuwa się na podstawie tylko jednego warunku
+    public function delete(string $table, string $condition, string $value): bool{
+        $sql = "DELETE FROM " .  $table . "WHERE " . $condition . "=" . $value . ";";
+        echo $sql;
         if($this->database->query($sql)) return true; else return false;
     }
 
-    public function delete($sql): bool{
+    public function update(string $table, string $column, string $new_value, string $condition, string $value): bool{
+        $sql = "UPDATE $table SET $column='$new_value' WHERE $condition='$value'";
         if($this->database->query($sql)) return true; else return false;
     }
 

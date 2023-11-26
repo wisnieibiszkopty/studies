@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <title>Form</title>
     <link rel="stylesheet" href="../styles.css">
+    <script src="static/script.js"></script>
 </head>
 <body>
 <div class="center">
-    <form method="post" action="files.php">
+    <form method="post" action="index.php">
         <article>
             <div class="form-item">
                 <div class="input">
@@ -21,8 +22,10 @@
                 <div class="input">
                     <label class="mg-left" for="country">Państwo</label>
                     <select name="country" id="country">
-                        <option value="pl" selected="selected">Polska</option>
-                        <option value="gb">Wielka Brytania</option>
+                        <option value="Polska" selected="selected">Polska</option>
+                        <option value="Wielka Brytania">Wielka Brytania</option>
+                        <option value="Niemcy">Niemcy</option>
+                        <option value="Czechy">Czechy</option>
                     </select>
                 </div>
                 <div class="input">
@@ -59,51 +62,59 @@
     </form>
 </div>
 <?php
-    include_once "Database.php";
+    include_once "classes/Database.php";
+    include_once "utils.php";
 
     function add(Database $database): void{
-        $args = [
-            'name' => ['filter' => FILTER_VALIDATE_REGEXP,
-                'options' => ['regexp' => '/^[A-Z]{1}[a-ząęłńśćźżó-]{1,25}$/']],
-            'age' => ['filter' => [FILTER_VALIDATE_INT, FILTER_SANITIZE_FULL_SPECIAL_CHARS]],
-            'country' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
-            'email' => ['filter' => [FILTER_VALIDATE_EMAIL, FILTER_SANITIZE_FULL_SPECIAL_CHARS]],
-            'languages' => ['filter' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
-                'flags' => FILTER_REQUIRE_ARRAY],
-            'payment' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
-            'submit' => FILTER_SANITIZE_FULL_SPECIAL_CHARS
-        ];
+        // czemu on szuka funkcji w innym folderze w ogóle 😭
+        // spytaj sie ziuta o to
+        $data = validateClient();
 
-        $data = filter_input_array(INPUT_POST, $args);
-        var_dump($data);
-
-        $errors = '';
-        foreach ($data as $key => $val){
-            if($val === false or $val === NULL){
-                $errors .= $key . " ";
+        if(count($data) != 0){
+            // formularz przeszedł walidacje            
+            var_dump($data);
+            if($database->save([
+                $data['name'],
+                $data['age'],
+                $data['country'],
+                $data['email'],
+                implode(',', $data['languages']),
+                $data['payment']
+            ])){
+                echo "Udało się dodać klienta.";
+            } else {
+                echo "Wystąpił problem przy dodawaniu klienta";
             }
         }
-
-        if($errors == ''){
-            echo $data['languages'];
-            $sql = "INSERT INTO clients " .
-                " (`Id`, `Name`, `Age`, `Country`, `Email`, `Order`, `Payment`)" .
-                " VALUES( " .
-                NULL . ", '" . $data['name'] . "', '" . $data['age'] . "', '" .
-                $data['country'] . "', '" . $data['email'] . "', '" . implode(',',$data['languages']) . "', '" .$data['payment'] . "');";
-
-            if($database->save($sql)){
-                echo "<h1>Dodano rekord do bazy danych</h1>";
-            }
-
-        } else {
-            echo "<h1>Niepoprawne dane</h1>";
-        }
-
+        show($database);
     }
 
     function show(Database $database): void{
-        echo $database->select("SELECT * FROM clients;", ['Name', 'Age', 'Country', 'Email', 'Order', 'Payment']);
+        echo "<table><thead>
+            <tr>
+                <th>ID</th>
+                <th>Nazwisko</th>
+                <th>Wiek</th>
+                <th>Kraj</th>
+                <th>Email</th>
+                <th>Zamówienia</th>
+                <th>Płatność</th>
+                <th></th>
+            </tr>
+        </thead><tbody>";
+        // remaining part of table
+        echo $database->select("SELECT * FROM clients;", ['Id', 'Name', 'Age', 'Country', 'Email', 'Order', 'Payment']);
+    }
+
+    function delete(Database $database): void {
+
+        if($database->delete("clients", "Id", '10')){
+            echo "Usunięto rekord z bazy danych.";
+        } else {
+            echo "Nie udało się usunąć rekordu z bazy danych.";
+        }
+        show($database);
+        http_response_code(200);
     }
 
     $db = new Database("localhost", "root", "", "clients");
@@ -114,6 +125,9 @@
                 break;
             case 'show':
                 show($db);
+                break;
+            case 'delete':
+                delete($db);
                 break;
             default:
                 echo "Nieprawidłowe dane";

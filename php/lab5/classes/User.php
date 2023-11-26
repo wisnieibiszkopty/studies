@@ -22,8 +22,8 @@ class User{
         $this->status = User::STATUS_USER;
         $this->date = new DateTime();
 
-        $this->database = new Database();
-        $this->database->selectCollection("users");
+        //$this->database = new Database();
+        //$this->database->selectCollection("users");
     }
 
     public function getFullName(): string
@@ -190,20 +190,20 @@ class User{
     // powinnismy skorzystac z obiektu $database, ale jest on dostepny tylko po dodaniu nowego rekordu
     // wiec nie da sie wyswietlic z nim danych statyczna metoda, a bez statycznej beda wyswietlane
     // tylko gdy dodajemy nowego uzytkownika
-    public static function findInDatabase(): void {
-        $db = new Database();
-        $db->selectCollection("users");
-        $users = $db->findAll();
-        echo "<h1>Dane z bazy danych</h1><br>";
-        foreach($users as $user){
-            echo "id: " . $user["_id"] . 
-            "<br>name: " . $user["userName"] . 
-            "<br>surname: " . $user["fullName"] . 
-            "<br>email: " . $user["email"] . 
-            "<br>password: " . $user["passwd"] . 
-            "<br>date: " . $user["date"] . 
-            "<br>status: " . $user["status"] . "<br><br>";
-        }
-    }
+    // public static function findInDatabase(): void {
+    //     $db = new Database();
+    //     $db->selectCollection("users");
+    //     $users = $db->findAll();
+    //     echo "<h1>Dane z bazy danych</h1><br>";
+    //     foreach($users as $user){
+    //         echo "id: " . $user["_id"] . 
+    //         "<br>name: " . $user["userName"] . 
+    //         "<br>surname: " . $user["fullName"] . 
+    //         "<br>email: " . $user["email"] . 
+    //         "<br>password: " . $user["passwd"] . 
+    //         "<br>date: " . $user["date"] . 
+    //         "<br>status: " . $user["status"] . "<br><br>";
+    //     }
+    // }
 
 }
