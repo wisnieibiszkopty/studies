@@ -13,6 +13,7 @@
     ],
     "require": {
         "mongodb/mongodb": "^1.0.0",
-      "ext-mysqli": "*"
+      "ext-mysqli": "*",
+      "ext-pdo": "*"
     }
 }

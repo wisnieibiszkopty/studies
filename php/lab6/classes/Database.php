@@ -1,7 +1,7 @@
 <?php
 
 class Database{
-    private $database;
+    private mysqli $database;
 
     public function __construct($server, $user, $password, $database){
         $this->database = new mysqli($server, $user, $password, $database);
@@ -15,11 +15,11 @@ class Database{
         $this->database->close();
     }
 
-    public function query($sql){
+    public function query($sql): bool{
         if($this->database->query($sql)) return true; else return false;
     }
 
-    public function select($sql, $params){
+    public function select($sql, $params): string{
         $html = "";
         if($result = $this->database->query($sql)){
             $count = count($params);
@@ -31,7 +31,10 @@ class Database{
                     $field = $params[$i];
                     $html .= "<td>" . $row->$field . "</td>";
                 }
-                $html .= "<td><a onclick='deleteClient($id)'><i class='bi bi-x'></i></a></td>";
+                $html .= "<td><form action='index.php' method='post'>" .
+                         "<input type='hidden' name='id' value='$id'>" .
+                         "<input type='submit' name='submit' value='delete'>" .
+                         "</form></td>";
                 $html .= "</tr>";
             }
             $html .= "</tbody></table>";
@@ -46,9 +49,6 @@ class Database{
     // trudne żebym się teraz z tym męczył
     public function save($values): bool{
         $stmt = $this->database->prepare("INSERT INTO clients VALUES (NULL, ?, ?, ?, ?, ?, ?)");
-        foreach($values as $val){
-            echo "$val<br>";
-        }
         $stmt->bind_param("sissss", $name, $age, $country, $email, $orders, $payment);
         $name = $values[0];
         $age = $values[1];
@@ -62,8 +62,7 @@ class Database{
 
     // na ten moment usuwa się na podstawie tylko jednego warunku
     public function delete(string $table, string $condition, string $value): bool{
-        $sql = "DELETE FROM " .  $table . "WHERE " . $condition . "=" . $value . ";";
-        echo $sql;
+        $sql = "DELETE FROM " .  $table . " WHERE " . $condition . "=" . $value . ";";
         if($this->database->query($sql)) return true; else return false;
     }
 
@@ -72,7 +71,7 @@ class Database{
         if($this->database->query($sql)) return true; else return false;
     }
 
-    public function getDB(){
+    public function getDB(): mysqli{
         return $this->database;
     }
 }
