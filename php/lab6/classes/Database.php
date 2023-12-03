@@ -44,6 +44,15 @@ class Database{
         return $html;
     }
 
+    public function getAll(String $table): mysqli_result | null{
+        $sql = "SELECT * FROM $table";
+        $results = $this->database->query($sql);
+        if($results->num_rows > 0){
+            return $results;
+        }
+        return null;
+    }
+
     // póki co funkcja odnosi się jedynie do tabeli clients,
     // użycie bind_param w ogólnym przypadku jest za
     // trudne żebym się teraz z tym męczył

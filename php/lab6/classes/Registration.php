@@ -5,49 +5,43 @@ class RegistrationForm{
 
     public function __construct(){
         ?>
-            <style>
-                @import "styles.css";
-            </style>
-            <form method="post" action="index.php">
+            <form method="post" action="registration.php">
                 <div class='form-item'>
                     <div class='input'>
                         <label for='userName'>Username</label>
                         <input type='text' name='userName' id='userName'>
                     </div>
                     <div class='input'>
-                        <label for='fullname'>Fullname</label>
-                        <input type="text" name="fullname" id="fullname">
+                        <label for='fullName'>Fullname</label>
+                        <input type="text" name="fullName" id="fullname">
                     </div>
                     <div class='input'>
                         <label for="email">Email</label>
                         <input type="email" name="email" id="email">
                     </div>
                     <div class='input'>
-                        <label for="password">Password</label>
-                        <input type="password" name="password" id="password">
+                        <label for="passwd">Password</label>
+                        <input type="passwd" name="passwd" id="passwd">
                     </div>
                     <div class='input'>
                         <input type='submit' name='submit' value='submit'>
-                    </div>
-                    <div class='input'>
-                        <input type='submit' name='show' value='show'>
                     </div>
                 </div>
             </form>
         <?php
     }
 
-    public function setUser(User $user): void{
+    public function setUser($user): void{
         $this->user = $user;
     }
 
-    public function checkUser(): User{
+    public function checkUser(): User | NULL{
         $args = [
             'userName' => ['filter' => FILTER_VALIDATE_REGEXP,
               'options' => ['regexp' => '/^[0-9A-Za-ząęłńśćźżó_-]{2,25}$/']],
-            'fullname' => ['filter' => FILTER_SANITIZE_FULL_SPECIAL_CHARS],
+            'fullName' => ['filter' => FILTER_SANITIZE_FULL_SPECIAL_CHARS],
             'email' => ['filter' => FILTER_VALIDATE_EMAIL],
-            'password' => ['filter' => FILTER_VALIDATE_REGEXP,
+            'passwd' => ['filter' => FILTER_VALIDATE_REGEXP,
                 'options' => ['regexp' => '/^[0-9A-Za-ząęłńśćźżó_-]{2,25}$/']]
         ];
 
@@ -61,14 +55,14 @@ class RegistrationForm{
         }
 
         if($errors === ''){
-            $this->setUser(new User($data['userName'], $data['fullname'], $data['email'], $data['password']));
+            $this->setUser(new User($data['userName'], $data['fullName'], $data['email'], $data['passwd']));
+            return $this->user;
         } else {
             echo $errors;
             echo "<h1 style='color: red'>Niepoprawne dane</h1>";
-            $this->setUser(NULL);
+            return NULL;
         }
 
-        return $this->user;
     }
 
 
