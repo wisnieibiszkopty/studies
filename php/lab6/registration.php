@@ -5,7 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <linK href="../styles.css" rel="stylesheet">
+    <link href="../styles.css" rel="stylesheet">
+    <style>
+        .form-item{
+            width: 80vw;
+            margin-left: 10vw;
+        }
+    </style>
 </head>
 <body>
     <h1>Rejstracja</h1>
@@ -14,7 +20,7 @@
     include_once 'classes/Registration.php';
     include_once 'classes/Database.php';
 
-    $rf = new RegistrationForm();
+    $rf = new Registration();
     $db = new Database('localhost', 'root', '', 'clients');
 
     if(filter_input(INPUT_POST, 'submit', FILTER_SANITIZE_FULL_SPECIAL_CHARS)){

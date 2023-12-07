@@ -44,6 +44,24 @@ class Database{
         return $html;
     }
 
+    public function selectUser(string $login, string $password, string $table): int {
+        $id = -1;
+        $sql = "SELECT * FROM $table WHERE userName='$login';";
+        if($result = $this->database->query($sql)){
+            $count = $result->num_rows;
+            echo "Count: $count";
+            if($count == 1) {
+                $row = $result->fetch_object();
+                $hash = $row->passwd;
+                if(password_verify($password, $hash)){
+                    $id = $row->id;
+                }
+            }
+        }
+
+        return $id;
+    }
+
     public function getAll(String $table): mysqli_result | null{
         $sql = "SELECT * FROM $table";
         $results = $this->database->query($sql);

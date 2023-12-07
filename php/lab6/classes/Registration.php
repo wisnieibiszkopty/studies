@@ -1,6 +1,6 @@
 <?php
 
-class RegistrationForm{
+class Registration{
     protected User $user;
 
     public function __construct(){
