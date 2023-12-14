@@ -19,6 +19,18 @@ class Database{
         if($this->database->query($sql)) return true; else return false;
     }
 
+    public function find($sql){
+        if($result = $this->database->query($sql)){
+            $count = $result->num_rows;
+            if($count == 1) {
+                $row = $result->fetch_object();
+                return json_encode($row);
+            }
+        }
+
+        return json_encode(array("id" => -1));
+    }
+
     public function select($sql, $params): string{
         $html = "";
         if($result = $this->database->query($sql)){
@@ -32,9 +44,9 @@ class Database{
                     $html .= "<td>" . $row->$field . "</td>";
                 }
                 $html .= "<td><form action='index.php' method='post'>" .
-                         "<input type='hidden' name='id' value='$id'>" .
-                         "<input type='submit' name='submit' value='delete'>" .
-                         "</form></td>";
+                    "<input type='hidden' name='id' value='$id'>" .
+                    "<input type='submit' name='submit' value='delete'>" .
+                    "</form></td>";
                 $html .= "</tr>";
             }
             $html .= "</tbody></table>";
@@ -44,22 +56,22 @@ class Database{
         return $html;
     }
 
-    public function selectUser(string $login, string $password, string $table): int {
+    public function selectUser(string $login, string $password, string $table): string{
         $id = -1;
         $sql = "SELECT * FROM $table WHERE userName='$login';";
+
         if($result = $this->database->query($sql)){
             $count = $result->num_rows;
-            echo "Count: $count";
             if($count == 1) {
                 $row = $result->fetch_object();
                 $hash = $row->passwd;
                 if(password_verify($password, $hash)){
-                    $id = $row->id;
+                    return json_encode($row);
                 }
             }
         }
 
-        return $id;
+        return json_encode(array("id" => $id));
     }
 
     public function getAll(String $table): mysqli_result | null{
@@ -89,7 +101,7 @@ class Database{
 
     // na ten moment usuwa się na podstawie tylko jednego warunku
     public function delete(string $table, string $condition, string $value): bool{
-        $sql = "DELETE FROM " .  $table . " WHERE " . $condition . "=" . $value . ";";
+        $sql = "DELETE FROM " .  $table . " WHERE " . $condition . "='" . $value . "';";
         if($this->database->query($sql)) return true; else return false;
     }
 

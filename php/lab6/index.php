@@ -67,6 +67,8 @@
     function add(Database $database): void{
         $data = validateClient();
 
+
+
         if(count($data) != 0){
             // formularz przeszedł walidacje
             if($database->save([

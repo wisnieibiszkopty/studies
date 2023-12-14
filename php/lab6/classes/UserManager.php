@@ -1,7 +1,7 @@
 <?php
 
 class UserManager{
-    public function login(Database $db): int{
+    public function login(Database $db){
         $args = [
             'login' => FILTER_SANITIZE_ADD_SLASHES ,
             'passwd' => FILTER_SANITIZE_ADD_SLASHES
@@ -11,25 +11,25 @@ class UserManager{
         $login = $request["login"];
         $password = $request['passwd'];
 
-        $id = $db->selectUser($login, $password, "users");
+        $user = json_decode($db->selectUser($login, $password, "users"));
 
-        if($id >= 0){
+        if($user->id >= 0){
             session_start();
-            $db->delete("logged_in_users", "userId", $id);
+            $db->delete("logged_in_users", "userId", $user->id);
             $date = new DateTime('now');
             $date = $date->format("YYYY-MM-DD");
             $sessionId = session_id();
+            $id = $user->id;
             $sql = "INSERT INTO logged_in_users VALUES ('$sessionId','$id','$date')";
             $db->query($sql);
         }
 
-        return $id;
+        return $user;
     }
 
     public function logout(Database $db): void{
         session_start();
         $id = session_id();
-        echo "Session id: $id";
         if(isset($_COOKIE[session_name()]) ) {
             setcookie(session_name(),'', time() - 42000, '/');
         }
@@ -37,14 +37,23 @@ class UserManager{
         $db->delete("logged_in_users", "sessionId", $id);
     }
 
-    public function getLoggedInUser(Database $db, int $id){
-        $sql = "SELECT userId FROM logged_in_users WHERE sessionId=$id";
-        $result = $db->query($sql);
-        if($result->num_rows == 1){
-            $row = $result->fetch_object();
-            return $row->id;
+    public function getLoggedInUser(Database $db, string $id){
+        $sql = "SELECT userId FROM logged_in_users WHERE sessionId='$id'";
+        if($id = json_decode($db->find($sql))){
+            // teraz okazuje sie ze istnieje zalogowany uzytkownik z takim sessionId
+            // teraz dzieki id mozemy zrobic selecta na usera i go zwrocic
+            if($id->userId == -1){
+                return null;
+            }
+
+            $sql = "SELECT * FROM users WHERE id=". $id->userId;
+            $user = json_decode($db->find($sql));
+            if($user->id != -1){
+                return $user;
+            }
         }
-        return -1;
+
+        return null;
     }
 
 }
